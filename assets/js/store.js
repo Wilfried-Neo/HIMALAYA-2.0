@@ -18,7 +18,7 @@ const HLY = (() => {
   const DEFAULT_PRODUCTS = [
     {
       id: 'p50cl', name: "Bouteille 50cl", format: "50 cl",
-      price: 500, stock: 50, available: true,
+      price: 200, stock: 50, available: true,
       img: 'images/bouteille-50cl.jpg',
       desc: "Format individuel, idéal pour les déplacements."
     },
