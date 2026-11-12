@@ -1,3 +1,4 @@
+
 /* ============================================================
    HIMALAYA — admin.js : espace d'administration
    Commandes · Produits · Zones · Paramètres
@@ -331,7 +332,7 @@
             <input name="address" value="${HLY.esc(s.address)}">
           </label>
           <label>Mot de passe administrateur
-            <input name="adminPassword" type="text" value="${HLY.esc(s.adminPassword)}">
+            <input name="adminPassword" type="password" value="${HLY.esc(s.adminPassword)}">
           </label>
           <button class="btn btn-primary" type="submit">Enregistrer</button>
         </form>
