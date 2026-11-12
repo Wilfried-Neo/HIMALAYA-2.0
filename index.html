@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Himalaya — Eau Minérale Naturelle | Commandez en ligne à Abidjan</title>
+  <meta name="description" content="Himalaya, eau minérale naturelle en Côte d'Ivoire. Commandez en ligne : livraison à domicile à Abidjan ou retrait en boutique. Bouteilles 50cl, 1,5L, packs et bonbonnes.">
+  <link rel="icon" type="image/jpeg" href="images/logo.jpg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+
+  <!-- ============ En-tête ============ -->
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="brand" href="#accueil">
+        <img src="images/logo.jpg" alt="Logo Himalaya">
+        <span>HIMALAYA</span>
+      </a>
+
+      <nav class="nav-links" aria-label="Navigation principale">
+        <a href="#accueil">Accueil</a>
+        <a href="#produits">Produits</a>
+        <a href="#services">Services</a>
+        <a href="#suivi">Suivi de commande</a>
+        <a href="#contact">Contact</a>
+      </nav>
+
+      <div class="header-actions">
+        <button class="cart-btn" id="cart-btn" aria-label="Ouvrir le panier">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M6 7h12l1.2 12.2a1.5 1.5 0 0 1-1.5 1.8H6.3a1.5 1.5 0 0 1-1.5-1.8L6 7z"/>
+            <path d="M9 10V6a3 3 0 0 1 6 0v4"/>
+          </svg>
+          Panier
+          <span class="cart-count" id="cart-count" hidden>0</span>
+        </button>
+        <button class="burger" id="burger" aria-expanded="false" aria-label="Menu">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <nav id="mobile-menu" aria-label="Navigation mobile">
+    <a href="#accueil">Accueil</a>
+    <a href="#produits">Produits</a>
+    <a href="#services">Services</a>
+    <a href="#suivi">Suivi de commande</a>
+    <a href="#contact">Contact</a>
+  </nav>
+
+  <!-- ============ Hero ============ -->
+  <section class="hero" id="accueil">
+    <div class="hero-bg">
+      <img src="images/banniere.jpg" alt="Gamme complète Himalaya — eau minérale naturelle">
+    </div>
+    <div class="hero-content">
+      <h1>Votre eau minérale, livrée chez vous.</h1>
+      <p>Bouteilles, packs et bonbonnes Himalaya à Abidjan : commandez en ligne, choisissez votre créneau, payez à la livraison ou au retrait.</p>
+      <div class="hero-ctas">
+        <a class="btn btn-primary" href="#produits">Commander maintenant</a>
+        <a class="btn btn-ghost" href="#services">Nos services</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ Bandeau confiance ============ -->
+  <div class="trust-bar">
+    <div class="trust-inner">
+      <div class="trust-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M1 8h13v9H1zM14 11h4l3 3v3h-7z"/><circle cx="6" cy="18.5" r="1.8"/><circle cx="17.5" cy="18.5" r="1.8"/></svg>
+        Livraison à domicile sur Abidjan
+      </div>
+      <div class="trust-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="6" width="20" height="13" rx="2"/><path d="M2 10h20M6 15h4"/></svg>
+        Paiement à la livraison ou au retrait
+      </div>
+      <div class="trust-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3s6 6.5 6 11a6 6 0 1 1-12 0c0-4.5 6-11 6-11z"/></svg>
+        Eau minérale naturelle de source pure
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ Produits ============ -->
+  <section class="section" id="produits">
+    <div class="section-head reveal">
+      <span class="kicker">Notre gamme</span>
+      <h2>Nos produits</h2>
+      <p>Choisissez, ajoutez au panier, et recevez votre eau où vous voulez. C'est aussi simple que ça.</p>
+    </div>
+    <div id="product-grid"></div>
+  </section>
+
+  <hr class="dotted">
+
+  <!-- ============ Services ============ -->
+  <section class="section" id="services">
+    <div class="section-head reveal">
+      <span class="kicker">Au quotidien</span>
+      <h2>Nos services</h2>
+    </div>
+    <div class="services-grid">
+      <div class="service-card reveal">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M1 8h13v9H1zM14 11h4l3 3v3h-7z"/><circle cx="6" cy="18.5" r="1.8"/><circle cx="17.5" cy="18.5" r="1.8"/></svg>
+        <h3>Livraison à domicile</h3>
+        <p>Recevez vos bouteilles et bonbonnes Himalaya directement chez vous, au bureau ou à l'endroit de votre choix.</p>
+      </div>
+      <div class="service-card reveal">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a9 9 0 1 1-3-6.7"/><path d="M21 3v6h-6"/></svg>
+        <h3>Abonnement</h3>
+        <p>Profitez d'un abonnement régulier pour recevoir votre eau Himalaya selon vos besoins, sans repasser commande à chaque fois.</p>
+      </div>
+      <div class="service-card reveal">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l7 3v5c0 5-3.5 8.5-7 10-3.5-1.5-7-5-7-10V6l7-3z"/><path d="M9 12l2 2 4-4"/></svg>
+        <h3>Garantie équipements</h3>
+        <p>Nos équipements bénéficient d'une garantie pour vous offrir plus de sécurité et de tranquillité lors de leur utilisation.</p>
+      </div>
+      <div class="service-card reveal">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14.7 6.3a4.5 4.5 0 0 0-6 6L3 18l3 3 5.7-5.7a4.5 4.5 0 0 0 6-6L14 13l-3-3 3.7-3.7z"/></svg>
+        <h3>Dépannage et entretien</h3>
+        <p>Notre service d'assistance vous accompagne pour l'entretien, la vérification et le dépannage de vos équipements.</p>
+      </div>
+    </div>
+  </section>
+
+  <hr class="dotted">
+
+  <!-- ============ Suivi de commande ============ -->
+  <section class="section" id="suivi">
+    <div class="section-head reveal">
+      <span class="kicker">Où en est ma commande ?</span>
+      <h2>Suivi de commande</h2>
+      <p>Entrez le numéro reçu après votre commande (ex : HLY-4821) pour voir son statut.</p>
+    </div>
+    <div class="track-wrap reveal">
+      <form id="track-form">
+        <input type="text" id="track-input" placeholder="Ex : HLY-4821" required>
+        <button class="btn btn-primary" type="submit">Rechercher</button>
+      </form>
+      <div id="track-result" aria-live="polite"></div>
+    </div>
+  </section>
+
+  <hr class="dotted">
+
+  <!-- ============ Contact ============ -->
+  <section class="section" id="contact">
+    <div class="section-head reveal">
+      <span class="kicker">Parlons-en</span>
+      <h2>Contact</h2>
+      <p>Une question, une grosse commande pour un événement, un partenariat ? Écrivez-nous ou appelez-nous.</p>
+    </div>
+    <div class="contact-grid reveal">
+      <a class="contact-card" id="wa-contact" href="https://wa.me/2250709607381" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 11.5a8.5 8.5 0 0 1-12.4 7.5L3 21l2-5.4A8.5 8.5 0 1 1 21 11.5z"/><path d="M9 9.5c.5 2.5 3 5 5.5 5.5l1-1.5 2 1c-.5 1.5-1.5 2-3 1.5-3-1-6.5-4.5-7.5-7.5-.5-1.5 0-2.5 1.5-3l1 2-1.5 1z" fill="currentColor" stroke="none"/></svg>
+        <div>
+          <strong>WhatsApp</strong>
+          <small>+225 07 09 60 73 81 — réponse rapide</small>
+        </div>
+      </a>
+      <a class="contact-card" id="tel-contact" href="tel:+2250709607381">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 4h4l2 5-2.5 1.5a12 12 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z"/></svg>
+        <div>
+          <strong>Téléphone</strong>
+          <small>+225 07 09 60 73 81</small>
+        </div>
+      </a>
+      <a class="contact-card" href="mailto:angew2727@gmail.com">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 7l10 6 10-6"/></svg>
+        <div>
+          <strong>Email</strong>
+          <small>angew2727@gmail.com</small>
+        </div>
+      </a>
+      <div class="contact-card">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-7-6-7-11a7 7 0 1 1 14 0c0 5-7 11-7 11z"/><circle cx="12" cy="10" r="2.6"/></svg>
+        <div>
+          <strong>Boutique</strong>
+          <small>Abidjan, Côte d'Ivoire — retrait sur place</small>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ Pied de page ============ -->
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div>
+        <img src="images/logo.jpg" alt="Logo Himalaya">
+        <p>Himalaya — eau minérale naturelle. La pureté des sommets à chaque goutte, livrée chez vous à Abidjan.</p>
+      </div>
+      <div>
+        <h4>Navigation</h4>
+        <a href="#accueil">Accueil</a>
+        <a href="#produits">Produits</a>
+        <a href="#services">Services</a>
+        <a href="#suivi">Suivi de commande</a>
+      </div>
+      <div>
+        <h4>Contact</h4>
+        <p>Tél : +225 07 09 60 73 81<br>
+        Email : angew2727@gmail.com<br>
+        Abidjan, Côte d'Ivoire</p>
+        <p><a href="admin.html">Espace boutique</a></p>
+      </div>
+    </div>
+    <div class="footer-bottom">© 2026 Himalaya Eau Minérale — Tous droits réservés</div>
+  </footer>
+
+  <!-- ============ Panier (tiroir) ============ -->
+  <div id="cart-backdrop" hidden></div>
+  <aside id="cart-drawer" aria-label="Panier">
+    <div class="cart-head">
+      <h3>Votre panier</h3>
+      <button class="icon-btn" id="cart-close" aria-label="Fermer le panier">×</button>
+    </div>
+    <div id="cart-items"></div>
+    <div class="cart-foot">
+      <div class="cart-subtotal-row">
+        <span>Sous-total</span>
+        <span id="cart-subtotal">0 FCFA</span>
+      </div>
+      <button class="btn btn-primary" id="checkout-btn" disabled>Passer la commande</button>
+    </div>
+  </aside>
+
+  <!-- ============ Modale commande ============ -->
+  <div id="checkout-modal" hidden role="dialog" aria-modal="true" aria-label="Finaliser la commande">
+    <div class="checkout-box">
+      <div class="checkout-top">
+        <div id="checkout-steps" aria-hidden="true"></div>
+        <button class="icon-btn" id="checkout-close" aria-label="Fermer">×</button>
+      </div>
+      <div id="checkout-body"></div>
+    </div>
+  </div>
+
+  <div id="toast" role="status"></div>
+
+  <script src="assets/js/store.js"></script>
+  <script src="assets/js/app.js"></script>
+</body>
+</html>
