@@ -78,7 +78,18 @@ const HLY = (() => {
   return {
     KEYS, DEFAULT_PRODUCTS, DEFAULT_SETTINGS, fmt, esc, todayStr, newOrderId,
 
-    getProducts() { return read(KEYS.products, null) || this.seedProducts(); },
+    getProducts() {
+  const products = read(KEYS.products, null) || this.seedProducts();
+
+  const bottle50cl = products.find(p => p.id === 'p50cl');
+
+  if (bottle50cl && bottle50cl.price !== 100) {
+    bottle50cl.price = 100;
+    write(KEYS.products, products);
+  }
+
+  return products;
+},
     seedProducts() { write(KEYS.products, DEFAULT_PRODUCTS); return [...DEFAULT_PRODUCTS]; },
     saveProducts(list) { write(KEYS.products, list); },
 
