@@ -1,6 +1,3 @@
-/* ============================================================
-   HIMALAYA — app.js : logique de la boutique (client)
-   ============================================================ */
 
 (() => {
   const $ = (sel, root = document) => root.querySelector(sel);
@@ -19,7 +16,7 @@
   const checkoutModal = $('#checkout-modal');
   const toast = $('#toast');
 
-  /* ---------------- Rendu des produits ---------------- */
+  
   function renderProducts() {
     const products = HLY.getProducts().filter(p => p.available);
     productGrid.innerHTML = products.map(p => {
@@ -338,7 +335,7 @@
     $('#ck-finish').addEventListener('click', () => { closeCheckout(); });
   }
 
-  /* ---------------- Suivi de commande ---------------- */
+ 
   function initTracking() {
     const form = $('#track-form');
     const result = $('#track-result');
@@ -407,7 +404,7 @@
       if (e.key === 'Escape') { closeCart(); closeCheckout(); }
     });
 
-    // Apparition au scroll
+    
     const io = new IntersectionObserver(entries => {
       entries.forEach(en => { if (en.isIntersecting) { en.target.classList.add('visible'); io.unobserve(en.target); } });
     }, { threshold: 0.12 });

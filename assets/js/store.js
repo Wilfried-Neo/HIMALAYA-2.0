@@ -1,10 +1,3 @@
-/* ============================================================
-   HIMALAYA — Eau Minérale Naturelle
-   store.js : logique partagée (données, stockage, commandes)
-   Site statique : les données sont stockées dans le navigateur
-   (localStorage) — voir README.md
-   ============================================================ */
-
 const HLY = (() => {
 
   const KEYS = {
@@ -14,11 +7,11 @@ const HLY = (() => {
     settings: 'himalaya_settings_v1',
   };
 
-  /* ---------- Produits par défaut (votre catalogue actuel) ---------- */
+  /* ---------- Mon catalogue ---------- */
   const DEFAULT_PRODUCTS = [
     {
       id: 'p50cl', name: "Bouteille 50cl", format: "50 cl",
-      price: 200, stock: 50, available: true,
+      price: 100, stock: 50, available: true,
       img: 'images/bouteille-50cl.jpg',
       desc: "Format individuel, idéal pour les déplacements."
     },
@@ -60,7 +53,7 @@ const HLY = (() => {
     ],
   };
 
-  /* ---------- Petits utilitaires ---------- */
+
   const read = (key, fallback) => {
     try {
       const raw = localStorage.getItem(key);
@@ -82,7 +75,6 @@ const HLY = (() => {
     return 'HLY-' + n;
   };
 
-  /* ---------- API publique ---------- */
   return {
     KEYS, DEFAULT_PRODUCTS, DEFAULT_SETTINGS, fmt, esc, todayStr, newOrderId,
 
@@ -122,15 +114,14 @@ const HLY = (() => {
     },
     clearCart() { this.saveCart([]); },
 
-    /* Crée une commande, décrémente le stock, retourne la commande */
     placeOrder({ customer, mode, payment, items, deliveryFee }) {
       const prods = this.getProducts();
       const order = {
         id: this.newOrderId(),
         createdAt: new Date().toISOString(),
         status: 'attente',
-        mode,                        // 'livraison' | 'retrait'
-        payment,                     // 'especes' | 'mobile'
+        mode,                       
+        payment,                    
         customer,
         deliveryFee: mode === 'livraison' ? (deliveryFee || 0) : 0,
         items: items.map(i => {
@@ -157,7 +148,6 @@ const HLY = (() => {
     setOrderStatus(id, status) {
       const orders = this.getOrders().map(o => o.id === id ? { ...o, status } : o);
       this.saveOrders(orders);
-      // annulation → remettre le stock
       if (status === 'annulee') this.restoreStock(id);
     },
 
@@ -182,7 +172,6 @@ const HLY = (() => {
 
     SLOTS: ['09h – 12h', '12h – 15h', '15h – 18h', '18h – 20h'],
 
-    /* Résumé texte d'une commande (pour WhatsApp) */
     orderSummary(order) {
       const s = this.getSettings();
       const lines = order.items.map(i => `• ${i.qty} × ${i.name} — ${this.fmt(i.price * i.qty)}`);

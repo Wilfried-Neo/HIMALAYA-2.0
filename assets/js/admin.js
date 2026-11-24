@@ -1,9 +1,3 @@
-
-/* ============================================================
-   HIMALAYA — admin.js : espace d'administration
-   Commandes · Produits · Zones · Paramètres
-   ============================================================ */
-
 (() => {
   const $ = (sel, root = document) => root.querySelector(sel);
   const $$ = (sel, root = document) => [...root.querySelectorAll(sel)];
@@ -11,7 +5,6 @@
   const AUTH_KEY = 'himalaya_admin_auth';
   const isAuth = () => sessionStorage.getItem(AUTH_KEY) === '1';
 
-  /* ================= AUTH ================= */
   function renderGate() {
     $('#admin-root').innerHTML = `
       <div class="gate">
@@ -22,7 +15,6 @@
           <input type="password" id="gate-pass" placeholder="Mot de passe" autocomplete="current-password">
           <button class="btn btn-primary" type="submit">Se connecter</button>
         </form>
-        <p class="gate-hint">Mot de passe démo : <code>himalaya2026</code> — changez-le dans « Paramètres ».</p>
         <a class="back-link" href="index.html">← Retour à la boutique</a>
       </div>`;
     $('#gate-form').addEventListener('submit', e => {
@@ -38,7 +30,6 @@
     });
   }
 
-  /* ================= APP ================= */
   let tab = 'orders';
 
   function renderApp() {
@@ -175,7 +166,6 @@
     modal.addEventListener('click', e => { if (e.target === modal) modal.hidden = true; });
   }
 
-  /* ---------------- Produits ---------------- */
   function renderProducts() {
     const prods = HLY.getProducts();
     $('#admin-main').innerHTML = `
@@ -268,7 +258,6 @@
     });
   }
 
-  /* ---------------- Zones de livraison ---------------- */
   function renderZones() {
     const s = HLY.getSettings();
     $('#admin-main').innerHTML = `
@@ -318,7 +307,6 @@
     });
   }
 
-  /* ---------------- Paramètres ---------------- */
   function renderSettings() {
     const s = HLY.getSettings();
     $('#admin-main').innerHTML = `

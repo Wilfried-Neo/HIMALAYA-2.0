@@ -1,16 +1,9 @@
-/* ============================================================
-   HIMALAYA — Eau Minérale Naturelle
-   style.css — identité : bleu source (décliné du logo)
-   Palette : navy profond / azur / glace, dérivée des visuels
-   de la marque (logo, bannière, étiquettes).
-   ============================================================ */
 
-/* ---------- Tokens ---------- */
 :root {
   --navy-950: #07223c;
-  --navy-800: #0b3c6e;   /* bleu marine du logo */
+  --navy-800: #0b3c6e; 
   --navy-600: #12549b;
-  --azure-500: #1e9bd7;  /* goutte azur */
+  --azure-500: #1e9bd7;
   --azure-300: #6cc0e8;
   --ice-100: #e9f4fb;
   --mist-50: #f5fafd;
@@ -83,7 +76,6 @@ a { color: var(--navy-600); }
   html { scroll-behavior: auto; }
 }
 
-/* ---------- Boutons ---------- */
 .btn {
   display: inline-flex;
   align-items: center;
@@ -138,7 +130,6 @@ a { color: var(--navy-600); }
 
 .btn-sm { min-height: 36px; padding: .4rem 1rem; font-size: .85rem; }
 
-/* ---------- En-tête ---------- */
 .site-header {
   position: sticky;
   top: 0;
@@ -242,7 +233,6 @@ a { color: var(--navy-600); }
 .burger[aria-expanded="true"] span:nth-child(2) { opacity: 0; }
 .burger[aria-expanded="true"] span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
 
-/* Menu mobile */
 #mobile-menu {
   position: fixed;
   inset: var(--header-h) 0 0 0;
@@ -267,7 +257,6 @@ a { color: var(--navy-600); }
   border-bottom: 1px solid rgba(255, 255, 255, .18);
 }
 
-/* ---------- Hero ---------- */
 .hero {
   position: relative;
   min-height: min(78vh, 640px);
@@ -315,7 +304,6 @@ a { color: var(--navy-600); }
 .hero .btn-ghost { border-color: #fff; color: #fff; }
 .hero .btn-ghost:hover { background: rgba(255, 255, 255, .14); }
 
-/* ---------- Bandeau confiance ---------- */
 .trust-bar {
   background: var(--navy-950);
   color: #dcecF8;
@@ -338,7 +326,6 @@ a { color: var(--navy-600); }
 }
 .trust-item svg { width: 24px; height: 24px; flex: none; color: var(--azure-300); }
 
-/* ---------- Sections ---------- */
 .section { max-width: 76rem; margin: 0 auto; padding: 3.4rem 1rem 2.6rem; }
 
 .section-head { margin-bottom: 1.8rem; }
@@ -361,7 +348,6 @@ hr.dotted {
   margin: 0 auto;
 }
 
-/* ---------- Produits ---------- */
 #product-grid {
   display: grid;
   grid-template-columns: 1fr;
@@ -435,7 +421,6 @@ hr.dotted {
   color: var(--navy-800);
 }
 
-/* ---------- Services ---------- */
 .services-grid {
   display: grid;
   grid-template-columns: 1fr;
@@ -455,7 +440,6 @@ hr.dotted {
 }
 .service-card p { color: var(--muted); font-size: .94rem; margin: 0; }
 
-/* ---------- Suivi ---------- */
 .track-wrap {
   background: var(--ice-100);
   border-radius: var(--radius-l);
@@ -496,7 +480,6 @@ hr.dotted {
 .st-ok { background: #e2f3e9; color: var(--ok); }
 .st-danger { background: #fbeae8; color: var(--danger); }
 
-/* ---------- Contact ---------- */
 .contact-grid {
   display: grid;
   grid-template-columns: 1fr;
@@ -519,7 +502,6 @@ hr.dotted {
 .contact-card strong { display: block; font-family: var(--font-display); color: var(--navy-950); }
 .contact-card small { color: var(--muted); }
 
-/* ---------- Pied de page ---------- */
 .site-footer {
   background: var(--navy-950);
   color: #bcd6e8;
@@ -546,11 +528,7 @@ hr.dotted {
   color: #8fb2cb;
 }
 
-/* ============================================================
-   PARTIE 2 — Panier, commande, admin, responsive
-   ============================================================ */
-
-/* ---------- Panier (tiroir) ---------- */
+/* ---------- Panier ---------- */
 #cart-backdrop {
   position: fixed;
   inset: 0;
@@ -661,7 +639,6 @@ hr.dotted {
 }
 #checkout-btn { width: 100%; }
 
-/* ---------- Modale commande ---------- */
 #checkout-modal {
   position: fixed;
   inset: 0;
@@ -748,7 +725,6 @@ hr.dotted {
 }
 .mode-icon svg { width: 24px; height: 24px; }
 
-/* Formulaires */
 #ck-form label, .settings-form label, #product-form label {
   display: block;
   font-family: var(--font-display);
@@ -832,7 +808,6 @@ hr.dotted {
   margin-top: 1.4rem;
 }
 
-/* Paiement */
 .pay-options { display: grid; grid-template-columns: 1fr; gap: .8rem; margin: 1.2rem 0; }
 .pay-card {
   display: block;
@@ -855,7 +830,7 @@ hr.dotted {
 }
 .pay-disabled { opacity: .55; cursor: not-allowed; }
 
-/* Confirmation */
+
 .confirm { text-align: center; }
 .confirm-check { width: 76px; margin: .5rem auto 1rem; }
 .confirm-check svg {
@@ -872,7 +847,6 @@ hr.dotted {
 .confirm .ck-recap { text-align: left; }
 .confirm .btn-wa, .confirm .btn-ghost { width: 100%; margin-top: .5rem; }
 
-/* ---------- Toast ---------- */
 #toast {
   position: fixed;
   left: 50%;
@@ -909,9 +883,6 @@ hr.dotted {
   .confirm-check svg { animation: none; stroke-dashoffset: 0; }
 }
 
-/* ============================================================
-   ADMIN
-   ============================================================ */
 .gate {
   max-width: 420px;
   margin: 8vh auto;
@@ -1109,9 +1080,6 @@ hr.dotted {
 .modal-close:hover { background: var(--ice-100); }
 .modal .btn-wa { margin-top: 1rem; }
 
-/* ============================================================
-   RESPONSIVE — mobile d'abord, couches desktop au-dessus
-   ============================================================ */
 @media (min-width: 640px) {
   .brand span { display: inline; }
   .field-row { grid-template-columns: 1fr 1fr; }
