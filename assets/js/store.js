@@ -114,6 +114,33 @@ const HLY = (() => {
 
   async function signOutAdmin() { if (client) await client.auth.signOut(); }
 
+  async function sendPasswordRecovery(email) {
+    if (!client) throw new Error('La connexion à la base n’est pas configurée.');
+    const redirectTo = new URL('reset-password.html', window.location.href).toString();
+    const { error } = await client.auth.resetPasswordForEmail(email, { redirectTo });
+    if (error) {
+      if (/redirect|url/i.test(error.message || '')) {
+        throw new Error('Supabase doit autoriser le lien de réinitialisation. Je vais t’aider à régler cela.');
+      }
+      throw new Error('Le courriel n’a pas pu être demandé. Réessaie dans quelques minutes.');
+    }
+  }
+
+  async function hasRecoverySession() {
+    if (!client) return false;
+    const { data, error } = await client.auth.getSession();
+    return !error && Boolean(data?.session);
+  }
+
+  async function updateAdminPassword(password) {
+    if (!client) throw new Error('La connexion à la base n’est pas configurée.');
+    const { data, error: userError } = await client.auth.getUser();
+    if (userError || !data?.user) throw new Error('Le lien a expiré. Demande un nouveau courriel de réinitialisation.');
+    const { error } = await client.auth.updateUser({ password });
+    if (error) throw new Error(error.message || 'Le nouveau mot de passe n’a pas pu être enregistré.');
+    await client.auth.signOut();
+  }
+
   async function saveProducts(list) {
     if (!client || !connected) throw new Error(lastError || 'Boutique hors ligne.');
     const rows = list.map(p => ({
@@ -189,6 +216,7 @@ const HLY = (() => {
     getOrders: () => orders,
     refreshOrders,
     signInAdmin, hasAdminSession, signOutAdmin,
+    sendPasswordRecovery, hasRecoverySession, updateAdminPassword,
     saveProducts, deleteProduct, saveSettings, placeOrder, trackOrder, setOrderStatus,
     getCart: readCart,
     saveCart: writeCart,

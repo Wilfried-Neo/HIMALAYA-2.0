@@ -14,6 +14,8 @@
           <input type="password" id="gate-pass" placeholder="Mot de passe" autocomplete="current-password" required>
           <button class="btn btn-primary" type="submit">Se connecter</button>
         </form>
+        <button class="back-link recovery-button" id="forgot-password" type="button">Mot de passe oublié ?</button>
+        <p class="form-error" id="recovery-message" hidden aria-live="polite"></p>
         <p class="form-error" id="gate-error" hidden></p>
         <a class="back-link" href="index.html">← Retour à la boutique</a>
       </div>`;
@@ -35,6 +37,29 @@
         error.textContent = err.message || 'Connexion impossible.';
         error.hidden = false;
       } finally { submit.disabled = false; }
+    });
+    $('#forgot-password').addEventListener('click', async () => {
+      const email = $('#gate-email').value.trim();
+      const button = $('#forgot-password');
+      const message = $('#recovery-message');
+      message.hidden = true;
+      message.className = 'form-error';
+      if (!email) {
+        message.textContent = 'Saisis ton adresse e-mail ci-dessus, puis appuie de nouveau ici.';
+        message.hidden = false;
+        return;
+      }
+      button.disabled = true;
+      try {
+        await HLY.sendPasswordRecovery(email);
+        message.className = 'save-ok';
+        message.textContent = 'Demande envoyée. Vérifie ta boîte e-mail et le dossier des courriers indésirables.';
+      } catch (err) {
+        message.textContent = err.message || 'Le courriel n’a pas pu être demandé. Réessaie.';
+      } finally {
+        message.hidden = false;
+        button.disabled = false;
+      }
     });
   }
 
