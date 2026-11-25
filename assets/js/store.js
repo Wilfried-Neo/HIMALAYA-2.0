@@ -74,7 +74,10 @@ const HLY = (() => {
     ]);
     if (pRes.error) fail(pRes.error);
     if (sRes.error) fail(sRes.error);
-    products = (pRes.data || []).map(mapProduct);
+    products = (pRes.data || []).map(mapProduct).sort((a, b) => {
+      const priority = id => id === 'p50cl' ? 0 : id === 'p15l' ? 1 : 2;
+      return priority(a.id) - priority(b.id) || a.id.localeCompare(b.id);
+    });
     const s = sRes.data;
     settings = {
       shopName: s.shop_name, whatsapp: s.whatsapp, address: s.address,
