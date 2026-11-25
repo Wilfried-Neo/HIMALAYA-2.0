@@ -129,11 +129,11 @@
     <div class="section-head reveal">
       <span class="kicker">Où en est ma commande ?</span>
       <h2>Suivi de commande</h2>
-      <p>Entrez le numéro reçu après votre commande (ex : HLY-4821) pour voir son statut.</p>
+      <p>Entrez le numéro reçu après votre commande (ex : HLY-A1B2C3D4E5F6) pour voir son statut.</p>
     </div>
     <div class="track-wrap reveal">
       <form id="track-form">
-        <input type="text" id="track-input" placeholder="Ex : HLY-4821" required>
+        <input type="text" id="track-input" placeholder="Ex : HLY-A1B2C3D4E5F6" required>
         <button class="btn btn-primary" type="submit">Rechercher</button>
       </form>
       <div id="track-result" aria-live="polite"></div>
@@ -232,6 +232,9 @@
 
   <div id="toast" role="status"></div>
 
+  <script src="assets/js/config.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit" async defer></script>
   <script src="assets/js/store.js"></script>
   <script src="assets/js/app.js"></script>
 </body>

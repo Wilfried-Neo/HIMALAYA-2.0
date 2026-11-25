@@ -1,0 +1,4 @@
+project_id = "himalaya-2-0"
+
+[functions.create-himalaya-order]
+verify_jwt = false

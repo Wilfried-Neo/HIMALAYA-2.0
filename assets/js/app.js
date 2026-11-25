@@ -23,9 +23,9 @@
       const out = p.stock <= 0;
       const low = !out && p.stock <= 5;
       return `
-      <article class="product-card reveal" data-id="${p.id}">
+      <article class="product-card reveal" data-id="${HLY.esc(p.id)}">
         <div class="product-disc">
-          <img src="${p.img}" alt="${HLY.esc(p.name)}" loading="lazy">
+          <img src="${HLY.esc(p.img)}" alt="${HLY.esc(p.name)}" loading="lazy">
           ${out ? '<span class="badge badge-out">Épuisé</span>'
                 : low ? `<span class="badge badge-low">Plus que ${p.stock}</span>` : ''}
         </div>
@@ -35,14 +35,14 @@
           <span class="price">${HLY.fmt(p.price)}</span>
           ${out
             ? '<button class="btn btn-disabled" disabled>Indisponible</button>'
-            : `<button class="btn btn-primary btn-add" data-id="${p.id}">Ajouter</button>`}
+            : `<button class="btn btn-primary btn-add" data-id="${HLY.esc(p.id)}">Ajouter</button>`}
         </div>
       </article>`;
     }).join('');
 
-    $$('.btn-add', productGrid).forEach(btn =>
-      btn.addEventListener('click', () => {
-        HLY.addToCart(btn.dataset.id, 1);
+      $$('.btn-add', productGrid).forEach(btn =>
+        btn.addEventListener('click', () => {
+        if (!HLY.addToCart(btn.dataset.id, 1)) return showToast('Ce produit n’est plus disponible.');
         updateCartUI();
         openCart();
       }));
@@ -71,8 +71,8 @@
         const p = prods.find(p => p.id === line.id);
         if (!p) return '';
         return `
-        <div class="cart-line" data-id="${p.id}">
-          <img src="${p.img}" alt="${HLY.esc(p.name)}">
+        <div class="cart-line" data-id="${HLY.esc(p.id)}">
+          <img src="${HLY.esc(p.img)}" alt="${HLY.esc(p.name)}">
           <div class="cart-line-info">
             <strong>${HLY.esc(p.name)}</strong>
             <span>${HLY.fmt(p.price)}</span>
@@ -119,6 +119,10 @@
 
   function openCheckout() {
     if (!HLY.getCart().length) return;
+    if (!HLY.isConfigured() || !HLY.isConnected()) {
+      showToast(HLY.getError() || 'La boutique en ligne est temporairement indisponible.');
+      return;
+    }
     closeCart();
     checkoutStep = 1;
     chosenMode = HLY.getSettings().deliveryEnabled ? 'livraison' : 'retrait';
@@ -260,6 +264,9 @@
 
     } else {
       const isDelivery = chosenMode === 'livraison';
+      if (turnstileWidgetId !== null && window.turnstile) window.turnstile.remove(turnstileWidgetId);
+      turnstileWidgetId = null;
+      pendingOrderChallenge = false;
       wrap.innerHTML = `
         <h3>Mode de paiement</h3>
         <div class="pay-options">
@@ -280,33 +287,78 @@
             <span>Bientôt disponible.</span>
           </label>
         </div>
+        <div id="turnstile-container" aria-hidden="true"></div>
         <p class="form-error" id="ck-error" hidden></p>
         <div class="checkout-nav">
           <button class="btn btn-ghost" id="ck-back">Retour</button>
           <button class="btn btn-primary" id="ck-confirm">Confirmer la commande</button>
         </div>`;
       $('#ck-back').addEventListener('click', () => { checkoutStep = 2; renderCheckout(); });
+      const siteKey = HLY.getTurnstileSiteKey();
+      let attempts = 0;
+      const mountTurnstile = () => {
+        if (!$('#turnstile-container')) return;
+        if (window.turnstile && siteKey) {
+          turnstileWidgetId = window.turnstile.render('#turnstile-container', {
+            sitekey: siteKey,
+            callback: token => { if (pendingOrderChallenge) submitSecureOrder(token); },
+            'expired-callback': () => { pendingOrderChallenge = false; showCheckoutError('La vérification a expiré. Veuillez réessayer.'); resetConfirmButton(); },
+            'error-callback': () => { pendingOrderChallenge = false; showCheckoutError('La vérification de sécurité est indisponible. Réessayez dans un instant.'); resetConfirmButton(); },
+          });
+        } else if (attempts++ < 50) setTimeout(mountTurnstile, 100);
+      };
+      mountTurnstile();
       $('#ck-confirm').addEventListener('click', () => {
         const pay = wrap.querySelector('[name=pay]:checked')?.value || 'especes';
         if (pay === 'mobile') {
-          const err = $('#ck-error');
-          err.textContent = 'Le paiement Mobile Money sera activé très bientôt. Choisissez « Espèces » pour valider votre commande maintenant.';
-          err.hidden = false;
+          showCheckoutError('Le paiement Mobile Money sera activé très bientôt. Choisissez « Espèces » pour valider votre commande maintenant.');
           return;
         }
-        const order = HLY.placeOrder({
-          customer: checkoutData.customer,
-          mode: chosenMode,
-          payment: pay,
-          items: HLY.getCart(),
-          deliveryFee: checkoutData.deliveryFee,
-        });
-        renderConfirmation(order);
+        if (turnstileWidgetId === null || !window.turnstile) {
+          showCheckoutError('La protection de commande n’est pas configurée. Veuillez réessayer plus tard.');
+          return;
+        }
+        pendingOrderChallenge = true;
+        const button = $('#ck-confirm');
+        button.disabled = true;
+        button.textContent = 'Vérification…';
+        window.turnstile.execute(turnstileWidgetId);
       });
     }
   }
 
   const checkoutData = { customer: null, deliveryFee: 0 };
+  let turnstileWidgetId = null;
+  let pendingOrderChallenge = false;
+
+  function showCheckoutError(message) {
+    const err = $('#ck-error');
+    if (err) { err.textContent = message; err.hidden = false; }
+  }
+  function resetConfirmButton() {
+    const button = $('#ck-confirm');
+    if (button) { button.disabled = false; button.textContent = 'Confirmer la commande'; }
+  }
+  async function submitSecureOrder(turnstileToken) {
+    pendingOrderChallenge = false;
+    const button = $('#ck-confirm');
+    if (!button) return;
+    button.textContent = 'Enregistrement…';
+    try {
+      const order = await HLY.placeOrder({
+        customer: checkoutData.customer, mode: chosenMode,
+        items: HLY.getCart(), turnstileToken,
+      });
+      renderConfirmation(order);
+    } catch (error) {
+      showCheckoutError(error.message || 'La commande n’a pas pu être enregistrée.');
+      resetConfirmButton();
+      if (turnstileWidgetId !== null && window.turnstile) window.turnstile.reset(turnstileWidgetId);
+      await HLY.refreshCatalog().catch(() => {});
+      renderProducts();
+      updateCartUI();
+    }
+  }
 
   function renderConfirmation(order) {
     updateCartUI();
@@ -339,10 +391,15 @@
   function initTracking() {
     const form = $('#track-form');
     const result = $('#track-result');
-    form.addEventListener('submit', e => {
+    form.addEventListener('submit', async e => {
       e.preventDefault();
       const id = $('#track-input').value.trim().toUpperCase();
-      const order = HLY.getOrders().find(o => o.id.toUpperCase() === id);
+      let order;
+      try { order = await HLY.trackOrder(id); }
+      catch (error) {
+        result.innerHTML = `<p class="form-error">${HLY.esc(error.message || 'Le suivi est indisponible.')}</p>`;
+        return;
+      }
       if (!order) {
         result.innerHTML = `<p class="form-error">Aucune commande trouvée avec le numéro <strong>${HLY.esc(id)}</strong>. Vérifiez le numéro reçu après votre commande.</p>`;
         return;
@@ -387,7 +444,8 @@
   }
 
   /* ---------------- Démarrage ---------------- */
-  document.addEventListener('DOMContentLoaded', () => {
+  document.addEventListener('DOMContentLoaded', async () => {
+    await HLY.init();
     renderProducts();
     updateCartUI();
     initTracking();
@@ -410,6 +468,8 @@
     }, { threshold: 0.12 });
     $$('.reveal').forEach(el => io.observe(el));
 
-    showToast('Bienvenue chez Himalaya — la pureté des sommets');
+    showToast(HLY.isConnected()
+      ? 'Bienvenue chez Himalaya — la pureté des sommets'
+      : (HLY.getError() || 'Bienvenue chez Himalaya — commandes en ligne indisponibles'));
   });
 })();
